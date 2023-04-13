@@ -1,0 +1,32 @@
+Use SangThu2;
+Go
+
+
+CREATE TABLE ValueTable (id int);
+INSERT INTO ValueTable VALUES(1);
+INSERT INTO ValueTable VALUES(2);
+
+
+select * from ValueTable
+
+BEGIN TRANSACTION;
+DELETE FROM ValueTable
+WHERE id = 2;
+COMMIT;
+
+
+BEGIN TRANSACTION;
+INSERT INTO ValueTable VALUES(3);
+INSERT INTO ValueTable VALUES(4);
+SAVE TRANSACTION sp;
+INSERT INTO ValueTable VALUES(5);
+INSERT INTO ValueTable VALUES(6);
+ROLLBACK TRANSACTION sp;
+
+
+
+DECLARE @TranName VARCHAR(20);
+SELECT @TranName = 'MyTransaction';
+BEGIN TRANSACTION @TranName;
+DELETE FROM ValueTable WHERE id = 1;
+COMMIT TRANSACTION @TranName;
